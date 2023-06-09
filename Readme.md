@@ -39,7 +39,7 @@ Below you can find the decisions that were taken based on requirements when desi
 #### Requirements
 
 With terraform we only create the infrastructure specific for resolving this problem. 
-The other infrastructure components (VPC, Route53, ACM) are not created, instead they are referenced (see `terraform/data.tf` for more details).
+The other infrastructure components (VPC, Route53, ACM) are not created, instead they are referenced (see `terraform/data.tf` and `terraform/vars.tf` for more details).
 In a production scenario you will have different modules to create components and this is the desired workflow.
 
 You also need to update the `terraform/state.tf` file with the desired configuration like S3 bucket.
@@ -53,7 +53,9 @@ Below you can find an example of a tfvars file:
 $ cat example.tfvars
 aws_profile="dev"
 aws_region="us-west-2"
-state_bucket="my-existing-unique-state-bucket"
+vpc_id             = "vpc-XXXXXXX"
+subnet_public_ids  = ["subnet-AAAAAAAAA", "subnet-BBBBBBBB", "subnet-CCCCCCCCCC"]
+subnet_private_ids = ["subnet-XXXXXXXXX", "subnet-YYYYYYYY", "subnet-ZZZZZZZZZZ"]
 route53_name="example.com"
 domain_name="*.example.com"
 tags = {

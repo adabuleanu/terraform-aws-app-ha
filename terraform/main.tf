@@ -23,8 +23,7 @@ resource "aws_autoscaling_group" "web" {
   max_size             = 4
   desired_capacity     = each.value["weight"] == 0 ? 0 : 2
   launch_configuration = aws_launch_configuration.web[each.key].name
-  vpc_zone_identifier  = data.terraform_remote_state.vpc.outputs.subnet_private_id
-
+  vpc_zone_identifier  = var.subnet_private_ids
   instance_refresh {
     strategy = "Rolling"
     preferences {
@@ -44,7 +43,7 @@ resource "aws_autoscaling_group" "web" {
 resource "aws_security_group" "web" {
   name        = "web-sg"
   description = "Security group for web instances"
-  vpc_id      = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id      = var.vpc_id
 
   ingress {
     description     = "Access from ALB"

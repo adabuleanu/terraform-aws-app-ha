@@ -2,7 +2,7 @@ resource "aws_lb" "web" {
   name               = "web-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = data.terraform_remote_state.vpc.outputs.subnet_public_id
+  subnets            = var.subnet_public_ids
   security_groups    = [aws_security_group.web_alb.id]
 
   tags = merge(local.tags, tomap({ Name = "web-app" }))
@@ -10,7 +10,7 @@ resource "aws_lb" "web" {
 
 resource "aws_security_group" "web_alb" {
   name   = "web-alb-sg"
-  vpc_id = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id = var.vpc_id
 
   dynamic "ingress" {
     for_each = [443, 80]
@@ -77,7 +77,7 @@ resource "aws_lb_target_group" "web" {
   name     = "${each.key}-tg"
   port     = 8080
   protocol = "HTTP"
-  vpc_id   = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id   = var.vpc_id
 
   health_check {
     path                = "/success"

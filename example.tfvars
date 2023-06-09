@@ -1,8 +1,10 @@
-aws_profile  = "dev"
-aws_region   = "us-west-2"
-state_bucket = "my-unique-state-bucket"
-route53_name = "example.com"
-domain_name  = "*.example.com"
+aws_profile        = "dev"
+aws_region         = "us-west-2"
+vpc_id             = "vpc-XXXXXXX"
+subnet_public_ids  = ["subnet-AAAAAAAAA", "subnet-BBBBBBBB", "subnet-CCCCCCCCCC"]
+subnet_private_ids = ["subnet-XXXXXXXXX", "subnet-YYYYYYYY", "subnet-ZZZZZZZZZZ"]
+route53_name       = "example.com"
+domain_name        = "*.example.com"
 tags = {
   "environment" = "dev"
 }

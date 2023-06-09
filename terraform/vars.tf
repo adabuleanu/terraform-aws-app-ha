@@ -8,9 +8,19 @@ variable "aws_region" {
   type        = string
 }
 
-variable "state_bucket" {
-  description = "S3 bucket name used to retrieve existing resources (e.g VPC)"
+variable "vpc_id" {
+  description = "ID of VPC used"
   type        = string
+}
+
+variable "subnet_public_ids" {
+  description = "List of public subnets inside the VPC"
+  type        = list(string)
+}
+
+variable "subnet_private_ids" {
+  description = "List of private subnets inside the VPC"
+  type        = list(string)
 }
 
 variable "route53_name" {
